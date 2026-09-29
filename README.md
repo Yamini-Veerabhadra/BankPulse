@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-BankPulse is a PostgreSQL-based banking analytics project that analyzes **45,211 direct marketing campaign records** to understand customer characteristics, campaign effectiveness, and term-deposit subscription patterns.
+BankPulse is an end-to-end banking analytics project that analyzes **45,211 direct marketing campaign records** using **PostgreSQL, SQL, and Power BI** to understand customer characteristics, campaign effectiveness, and term-deposit subscription patterns.
 
-The project follows an end-to-end SQL analytics workflow, beginning with database creation and data-quality validation and progressing through exploratory analysis, customer segmentation, campaign analysis, and advanced SQL techniques.
+The project follows a complete analytics workflow: raw data is loaded and validated in PostgreSQL, explored using SQL, segmented through analytical feature engineering, and translated into a two-page Power BI dashboard for business-facing reporting and visualization.
 
 The objective is not simply to identify which records converted, but to understand how customer financial characteristics, existing loan relationships, previous campaign interactions, contact frequency, and campaign timing are associated with subscription outcomes.
 
@@ -56,6 +56,8 @@ A PostgreSQL `SERIAL` primary key named `customer_id` was added during database 
 
 - **PostgreSQL 17** — relational database and analytical SQL
 - **pgAdmin 4** — database administration and query execution
+- **Power BI Desktop** — data modeling, DAX measures, and interactive dashboard development
+- **Power Query** — analytical feature creation and data preparation for reporting
 - **Visual Studio Code** — SQL development and project organization
 - **Git / GitHub** — version control and portfolio hosting
 
@@ -63,7 +65,6 @@ A PostgreSQL `SERIAL` primary key named `customer_id` was added during database 
 
 ## Project Structure
 
-```text
 BankPulse/
 │
 ├── data/
@@ -71,6 +72,14 @@ BankPulse/
 │       └── bank-full.csv
 │
 ├── docs/
+│   └── analysis_summary.md
+│
+├── powerbi/
+│   └── BankPulse_Dashboard.pbix
+│
+├── screenshots/
+│   ├── campaign_overview.png
+│   └── customer_campaign_insights.png
 │
 ├── sql/
 │   ├── 01_database_setup.sql
@@ -82,11 +91,45 @@ BankPulse/
 │
 ├── README.md
 └── .gitignore
-```
 
-The raw dataset is preserved without modification. Data validation, transformation logic, segmentation, and analysis are performed through SQL.
+The raw dataset is preserved without modification. Data validation and core analytical work are performed in PostgreSQL using SQL, while Power BI is used to create reporting-oriented features, DAX measures, and interactive dashboard visualizations.
 
 ---
+
+# Power BI Dashboard
+
+The Power BI dashboard translates the SQL analysis into a two-page reporting experience focused on campaign performance and customer/campaign insights.
+
+## Page 1 — Campaign Overview
+
+The Campaign Overview provides a high-level view of campaign performance, including:
+
+- **45,211** campaign records
+- **5,289** term-deposit subscriptions
+- **11.70%** overall conversion rate
+- Monthly conversion patterns
+- Conversion by campaign contact frequency
+- Conversion by loan profile
+- Conversion by previous campaign outcome
+
+![BankPulse Campaign Overview](screenshots/campaign_overview.png)
+
+## Page 2 — Customer & Campaign Insights
+
+The second page provides deeper segment and interaction analysis, including:
+
+- Conversion rate by job
+- Total subscriptions by job
+- Conversion rate by balance segment
+- Conversion rate by age group
+- Conversion rate by contact type
+- Average contact duration by subscription outcome
+
+![BankPulse Customer and Campaign Insights](screenshots/customer_campaign_insights.png)
+
+The dashboard intentionally presents both **conversion rate** and **subscription volume** because a segment with a high response rate does not necessarily contribute the largest number of total subscriptions.
+
+Call duration is included only as a retrospective descriptive measure. Because duration is known during or after the campaign interaction, it should not be interpreted as a pre-call targeting or predictive feature.
 
 # Analytical Workflow
 
@@ -559,13 +602,29 @@ Execute the scripts in sequence:
 06_advanced_analysis.sql
 ```
 
----
+## 5. Open the Power BI Dashboard
 
+The completed Power BI report is available at:
+
+```text
+powerbi/BankPulse_Dashboard.pbix
+```
+
+Open the file using Power BI Desktop.
+
+The report contains two pages:
+
+- **Campaign Overview** — overall campaign KPIs, monthly conversion patterns, contact-frequency performance, loan-profile performance, and previous campaign outcomes.
+- **Customer & Campaign Insights** — job-level conversion and subscription volume, balance segments, age groups, contact types, and retrospective contact-duration analysis.
+
+The dashboard screenshots can also be viewed directly in the `screenshots/` folder without opening Power BI Desktop.
+
+---
 # Project Takeaways
 
-BankPulse demonstrates an end-to-end SQL analytics workflow covering:
+BankPulse demonstrates an end-to-end analytics workflow covering:
 
-**raw data → validation → exploration → segmentation → campaign analysis → advanced SQL → business interpretation**
+**raw data → PostgreSQL → data validation → SQL analysis → segmentation → advanced SQL → Power BI visualization → business interpretation**
 
-The project emphasizes not only SQL syntax but also analytical reasoning: validating data before analysis, distinguishing conversion efficiency from business volume, considering sample sizes, avoiding causal overstatement, identifying data leakage, and documenting limitations.
+The project emphasizes both technical execution and analytical reasoning: validating data before analysis, distinguishing conversion efficiency from business volume, considering sample sizes, avoiding causal overstatement, identifying data leakage, documenting limitations, and communicating findings through an interactive Power BI dashboard.
 
