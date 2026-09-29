@@ -1,0 +1,20 @@
+CREATE TABLE bank_marketing_raw (
+    customer_id SERIAL PRIMARY KEY,
+    age INTEGER,
+    job VARCHAR(50),
+    marital VARCHAR(20),
+    education VARCHAR(20),
+    credit_default VARCHAR(10),
+    balance INTEGER,
+    housing_loan VARCHAR(10),
+    personal_loan VARCHAR(10),
+    contact_type VARCHAR(20),
+    contact_day INTEGER,
+    contact_month VARCHAR(10),
+    contact_duration INTEGER,
+    campaign_contacts INTEGER,
+    days_since_previous_contact INTEGER,
+    previous_contacts INTEGER,
+    previous_outcome VARCHAR(20),
+    subscribed VARCHAR(10)
+);

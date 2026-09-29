@@ -1,0 +1,18 @@
+# PostgreSQL / local environment files
+*.log
+*.tmp
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# VS Code local settings
+.vscode/
+
+# Environment / secret files
+.env
+.env.*
+
+# Python cache (for possible future analysis)
+__pycache__/
+*.pyc
