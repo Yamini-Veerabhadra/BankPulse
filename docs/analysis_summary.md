@@ -61,7 +61,7 @@ Previous campaign success was strongly associated with current campaign response
 
 Records with a previous successful outcome converted at 64.73%, compared with the overall campaign baseline of 11.70%.
 
-Records with no usable previous campaign history converted at approximately 9.16%.
+Records meeting the explicit no-prior-contact pattern (`previous=0` and `pdays=-1`) converted at approximately 9.16%. This is distinct from the full `poutcome=unknown` category, which also includes five other records.
 
 ---
 
@@ -166,3 +166,9 @@ BankPulse demonstrates how SQL can be used to transform raw campaign data into s
 The project identifies meaningful differences in campaign response across contact frequency, loan status, previous campaign history, timing, and customer profiles while maintaining appropriate analytical limitations.
 
 The analysis also demonstrates that campaign evaluation should consider both conversion efficiency and absolute subscription volume rather than relying on a single performance metric.
+
+---
+
+## Independent Validation and Business Decision Summary
+
+For three evidence-backed business questions and concrete investigation recommendations, see `business_decision_brief.md`. For independently recalculated numerators, denominators, segmentation reconciliation, and unknown-category sensitivity, see `validation_report.md`. See `kpi_dictionary.md` for definitions and `../sql/07_business_validation.sql` for reproducible PostgreSQL checks. CSV checks passed; the Power BI dashboard has **not** been independently cross-validated by these new additions.

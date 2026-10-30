@@ -1,0 +1,24 @@
+-- One-command local PostgreSQL import. Run from the BankPulse repository root:
+-- psql -U postgres -d bankpulse -v ON_ERROR_STOP=1 -f scripts/setup_and_import.psql
+-- First create an EMPTY database named bankpulse (pgAdmin or createdb).
+-- This script deliberately does not DROP an existing table or overwrite data.
+\set ON_ERROR_STOP on
+BEGIN;
+\i sql/01_database_setup.sql
+-- File path is relative to the directory from which you launched psql.
+-- Column order is the order of the 17 original CSV fields; customer_id is generated.
+\copy bank_marketing_raw (age, job, marital, education, credit_default, balance, housing_loan, personal_loan, contact_type, contact_day, contact_month, contact_duration, campaign_contacts, days_since_previous_contact, previous_contacts, previous_outcome, subscribed) FROM 'data/raw/bank-full.csv' WITH (FORMAT csv, HEADER true, DELIMITER ';', QUOTE '"')
+-- Reject a partial/wrong import before committing the transaction.
+DO $$
+BEGIN
+    IF (SELECT COUNT(*) FROM bank_marketing_raw) <> 45211 OR
+       (SELECT COUNT(*) FROM bank_marketing_raw WHERE subscribed = 'yes') <> 5289 THEN
+        RAISE EXCEPTION 'BankPulse import totals do not match the bundled source CSV';
+    END IF;
+END $$;
+COMMIT;
+SELECT COUNT(*) AS campaign_records,
+       COUNT(*) FILTER (WHERE subscribed = 'yes') AS subscribed_records,
+       ROUND(100.0 * COUNT(*) FILTER (WHERE subscribed = 'yes') /
+             NULLIF(COUNT(*), 0), 2) AS conversion_pct
+FROM bank_marketing_raw;

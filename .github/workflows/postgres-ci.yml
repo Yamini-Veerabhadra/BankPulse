@@ -1,0 +1,45 @@
+name: BankPulse - Python checks and PostgreSQL integration
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: bankpulse_ci
+          POSTGRES_USER: bankpulse_ci
+          POSTGRES_PASSWORD: ci_ephemeral_only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U bankpulse_ci -d bankpulse_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: 5432
+      PGUSER: bankpulse_ci
+      PGDATABASE: bankpulse_ci
+      PGPASSWORD: ci_ephemeral_only
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent CSV, SQL compatibility and PBIX structure checks
+        run: |
+          python -m unittest discover -s tests -v
+          python scripts/audit_powerbi_report.py --check
+      - name: Install PostgreSQL client (native psql)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          psql --version
+      - name: Run import and 57 analysis statements on PostgreSQL 17
+        run: bash scripts/verify_postgres.sh

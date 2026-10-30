@@ -1,18 +1,30 @@
-# PostgreSQL / local environment files
-*.log
-*.tmp
-
-# Operating system files
-.DS_Store
-Thumbs.db
-
-# VS Code local settings
-.vscode/
-
-# Environment / secret files
+# Local configuration, credentials, and private SQL notes
 .env
 .env.*
+!.env.example
+SQL password.sql
+*.secret
+*.secrets
+*.pem
+*.key
 
-# Python cache (for possible future analysis)
+# Temporary / generated files
+*.log
+*.tmp
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.sqlite
+*.sqlite3
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.venv/
+venv/
+
+# Avoid accidentally committing local exports
+exports/
+output/

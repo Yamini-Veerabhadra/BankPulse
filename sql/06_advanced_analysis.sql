@@ -197,7 +197,7 @@ ORDER BY
 
 
 -- ============================================================
--- 4. Month-over-month change in conversion rate
+-- 4. Calendar-month-ordered comparisons of conversion rates (NOT year-to-year chronology)
 -- Demonstrates LAG()
 -- ============================================================
 
@@ -282,7 +282,7 @@ ORDER BY month_number;
 
 
 -- ============================================================
--- 5. Cumulative campaign records and subscriptions by month
+-- 5. Calendar-month running totals (no year field; NOT a time-series cumulative curve)
 -- Demonstrates SUM() as a window function
 -- ============================================================
 
